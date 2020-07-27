@@ -26,11 +26,17 @@ dependencies {
 	runtimeOnly 'com.h2database:h2'
 	runtimeOnly 'mysql:mysql-connector-java'
 	annotationProcessor 'org.projectlombok:lombok'
-	testImplementation('org.springframework.boot:spring-boot-starter-test') {
-		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
-	}
+	testImplementation('org.springframework.boot:spring-boot-starter-test')
+	compileClasspath 'io.spring.gradle:dependency-management-plugin:1.0.4.RELEASE'
+	compile 'pl.allegro.tech.boot:handlebars-spring-boot-starter:0.3.0'
+	testCompile('org.hamcrest:hamcrest:2.1')
 }
 
+// Spring Boot Overriding
+ext['hibernate.version'] = '5.2.11.Final'
+
 test {
-	useJUnitPlatform()
+	useJUnitPlatform {
+		includeEngines 'junit-vintage'
+	}
 }
